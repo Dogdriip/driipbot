@@ -11,7 +11,11 @@ const bot = new App(token);
 bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
 
 bot.hears(/=$/, (ctx) => {
-  ctx.reply(ctx.message.text, ctx.message.message_id);
+  const re = /^[0-9+\-*/^()]+$/g;
+  const text = ctx.message.text.split("=")[0];
+  if (re.test(text)) {
+    ctx.reply(eval(text));
+  }
 });
 
 bot.command("pick", (ctx) => {
