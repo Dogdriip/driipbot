@@ -1,28 +1,12 @@
 const { Telegraf } = require("telegraf");
+const commandArgsMiddleware = require("./middleware/commandArgs");
 
 class App {
   constructor(token) {
     this.bot = new Telegraf(token, {
       telegram: { webhookReply: true },
     });
-
-    this.bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
-
-    this.bot.hears(/=$/, (ctx) => {
-      ctx.reply(ctx.message.text, ctx.message.message_id);
-    });
-
-    this.bot.command("pick", (ctx) => {
-      let text = ctx.message.text;
-      text = text.split(" ");
-      text.shift();
-      const args = text;
-      const len = args.length;
-
-      if (len <= 0) return;
-
-      ctx.reply(`${args[Math.floor(Math.random() * len)]}`);
-    });
+    this.bot.use(commandArgsMiddleware());
 
     return this.bot;
   }

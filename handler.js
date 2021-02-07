@@ -8,6 +8,18 @@ if (token === undefined) {
 
 const bot = new App(token);
 
+bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
+
+bot.hears(/=$/, (ctx) => {
+  ctx.reply(ctx.message.text, ctx.message.message_id);
+});
+
+bot.command("pick", (ctx) => {
+  const { args } = ctx.state.command;
+  const rand_idx = Math.floor(Math.random() * args.length);
+  ctx.reply(`${args[rand_idx]}`);
+});
+
 const handler = lambdaRequestHandler(
   bot.webhookCallback(process.env.WEBHOOK_PATH)
 );
