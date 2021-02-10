@@ -27,6 +27,16 @@ export default class App {
     this.bot.use(TimeLogger());
     this.bot.use(CommandParser());
 
+    this.bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
+
+    this.bot.hears(/=$/, (ctx) => {
+      const re = /^[0-9+\-*/^()]+$/g;
+      const text = ctx.message.text.split("=")[0];
+      if (re.test(text)) {
+        ctx.reply(eval(text));
+      }
+    });
+
     this.bot.command("pick", (ctx) => {
       const { args } = ctx.state.command;
       const rand_idx: number = Math.floor(Math.random() * args.length);

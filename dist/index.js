@@ -37,9 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var App_1 = require("./App");
+var dotenv_1 = require("dotenv");
 var inversify_1 = require("inversify");
 require("reflect-metadata");
-var token = "1678000068:AAGKgaaYfNBEwLdguJtDxhws9ku2woxee6g";
+dotenv_1.config();
+var token = process.env.BOT_TOKEN;
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var container, app, bot;
     return __generator(this, function (_a) {

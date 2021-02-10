@@ -18,6 +18,14 @@ var App = /** @class */ (function () {
         this.bot.use(Logger_1.default());
         this.bot.use(TimeLogger_1.default());
         this.bot.use(CommandParser_1.default());
+        this.bot.hears("브로코 브로코 브로콜리", function (ctx) { return ctx.reply("브로코!"); });
+        this.bot.hears(/=$/, function (ctx) {
+            var re = /^[0-9+\-*/^()]+$/g;
+            var text = ctx.message.text.split("=")[0];
+            if (re.test(text)) {
+                ctx.reply(eval(text));
+            }
+        });
         this.bot.command("pick", function (ctx) {
             var args = ctx.state.command.args;
             var rand_idx = Math.floor(Math.random() * args.length);

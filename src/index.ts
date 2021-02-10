@@ -1,8 +1,10 @@
 import App from "./App";
+import { config } from "dotenv";
 import { Container } from "inversify";
 import "reflect-metadata";
 
-const token = "";
+config();
+const token = process.env.BOT_TOKEN;
 
 (async () => {
   const container = new Container();
