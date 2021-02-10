@@ -1,1 +1,0 @@
-{ "update_id": 125927813, "message": { "message_id": 126, "from": { id: 219223671, is_bot: false, first_name: '현승', last_name: '전', username: 'dogdriip', language_code: 'en' }, chat: { id: 219223671, first_name: '현승', last_name: '전', username: 'dogdriip', type: 'private' }, date: 1612707577, text: '/pick 1 2 3 4 5', entities: [ [Object] ] } }

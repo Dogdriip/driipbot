@@ -1,4 +1,20 @@
-const commandArgs = () => (ctx, next) => {
+import { Context, Telegraf } from "telegraf";
+
+interface Command {
+  raw: string,
+  command: string,
+  args: string[],
+}
+
+interface State {
+  command: Command;
+}
+
+export interface ContextWithState extends Context {
+  state: State;
+}
+
+export default () => (ctx, next) => {
   if (ctx.message && ctx.message.text) {
     const text = ctx.message.text;
     if (text.startsWith("/")) {
@@ -24,5 +40,3 @@ const commandArgs = () => (ctx, next) => {
 
   return next();
 };
-
-module.exports = commandArgs;
