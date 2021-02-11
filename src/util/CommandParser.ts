@@ -1,9 +1,9 @@
 import { Context, Telegraf } from "telegraf";
 
 interface Command {
-  raw: string,
-  command: string,
-  args: string[],
+  raw: string;
+  command: string;
+  args: string[];
 }
 
 interface State {
