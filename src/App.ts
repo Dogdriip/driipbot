@@ -3,6 +3,7 @@ import { Telegraf, Markup } from "telegraf";
 import { TYPE } from "./constants";
 import Calculator from "./middleware/Calculator";
 import FreeCounter from "./middleware/FreeCounter";
+import Memo from "./middleware/Memo";
 import Say from "./middleware/Say";
 import Sayd from "./middleware/Sayd";
 import Select from "./middleware/Select";
@@ -33,6 +34,7 @@ export default class App {
 
     this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
     this._bot.hears(/=$/, Calculator());
+    this._bot.hears(/!$/, Memo());
 
     this._bot.command("pick", Select());
     this._bot.command("say", Say());
