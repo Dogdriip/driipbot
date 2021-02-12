@@ -1,6 +1,5 @@
 import { Container } from "inversify";
-import { Telegraf, Markup } from "telegraf";
-import { TYPE } from "./constants";
+import { Telegraf } from "telegraf";
 import Calculator from "./middleware/Calculator";
 import FreeCounter from "./middleware/FreeCounter";
 import Memo from "./middleware/Memo";
@@ -8,7 +7,6 @@ import Say from "./middleware/Say";
 import Sayd from "./middleware/Sayd";
 import Select from "./middleware/Select";
 import CommandParser, { ContextWithState } from "./util/CommandParser";
-import Logger from "./util/Logger";
 import TimeLogger from "./util/TimeLogger";
 
 export interface AppContext extends ContextWithState {
@@ -22,13 +20,9 @@ export default class App {
   constructor(token: string, container: Container) {
     this._bot = new Telegraf<AppContext>(token);
     this._container = container;
-    this._container
-      .bind<Telegraf<AppContext>>(TYPE.BotInstance)
-      .toConstantValue(this._bot);
   }
 
   build() {
-    this._bot.use(Logger());
     this._bot.use(TimeLogger());
     this._bot.use(CommandParser());
 

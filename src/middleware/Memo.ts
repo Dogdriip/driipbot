@@ -1,5 +1,5 @@
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
-import { ReturnModelType } from "@typegoose/typegoose/lib/types";
+import { Markup } from "telegraf";
 
 @modelOptions({ options: { customName: "Memo" } })
 class MemoModel {
@@ -17,12 +17,17 @@ export default () => async (ctx, next) => {
   const memoModel = getModelForClass(MemoModel);
 
   const name = ctx.message.text.slice(1);
+  if (!name) {
+    return next();
+  }
+
   let memo = await memoModel.findOne({
     chat_id: ctx.message.chat.id,
     name,
   });
 
   if (!ctx.message.reply_to_message) {
+    // forward memo
     if (!memo) {
       await ctx.reply(`Cannot found "${name}".`);
       return next();
@@ -39,16 +44,28 @@ export default () => async (ctx, next) => {
       return next();
     }
   } else {
-    if (!memo) {
-      memo = await memoModel.create({
+    // create memo
+    let msg = `Saved "${name}".`;
+    if (memo) {
+      await memoModel.deleteOne({
         chat_id: ctx.chat.id,
-        message_id: ctx.message.reply_to_message.message_id,
         name,
       });
-      await memo.save();
+      msg += " (Overwritten)";
     }
+
+    memo = await memoModel.create({
+      chat_id: ctx.chat.id,
+      message_id: ctx.message.reply_to_message.message_id,
+      name,
+    });
+    await memo.save();
+
     try {
-      await ctx.reply("Saved.");
+      await ctx.reply(
+        msg,
+        Markup.inlineKeyboard([Markup.button.callback("Delete", "memodel")])
+      );
     } catch (e) {
       console.log(e.description);
       return next();

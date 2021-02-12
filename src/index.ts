@@ -2,7 +2,6 @@ import { mongoose } from "@typegoose/typegoose";
 import App from "./App";
 import { config } from "dotenv";
 import { Container } from "inversify";
-import "reflect-metadata";
 
 config();
 const token = process.env.BOT_TOKEN;
