@@ -64,7 +64,7 @@ export default () => async (ctx, next) => {
     try {
       await ctx.reply(
         msg,
-        Markup.inlineKeyboard([Markup.button.callback("Delete", "memodel")])
+        Markup.inlineKeyboard([Markup.button.callback("Delete", "memodel")]) // TODO Implement memodel
       );
     } catch (e) {
       console.log(e.description);

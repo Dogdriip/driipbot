@@ -4,7 +4,6 @@ import Calculator from "./middleware/Calculator";
 import FreeCounter from "./middleware/FreeCounter";
 import Memo from "./middleware/Memo";
 import Say from "./middleware/Say";
-import Sayd from "./middleware/Sayd";
 import Select from "./middleware/Select";
 import CommandParser, { ContextWithState } from "./util/CommandParser";
 import TimeLogger from "./util/TimeLogger";
@@ -27,8 +26,8 @@ export default class App {
     this._bot.use(CommandParser());
 
     this._bot.command("pick", Select());
-    this._bot.command("say", Say());
-    this._bot.command("sayd", Sayd());
+    this._bot.command("say", Say({ delete: false }));
+    this._bot.command("sayd", Say({ delete: true }));
     this._bot.command("free", FreeCounter());
 
     this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
