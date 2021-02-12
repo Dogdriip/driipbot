@@ -32,14 +32,14 @@ export default class App {
     this._bot.use(TimeLogger());
     this._bot.use(CommandParser());
 
-    this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
-    this._bot.hears(/=$/, Calculator());
-    this._bot.hears(/!$/, Memo());
-
     this._bot.command("pick", Select());
     this._bot.command("say", Say());
     this._bot.command("sayd", Sayd());
     this._bot.command("free", FreeCounter());
+
+    this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
+    this._bot.hears(/=$/, Calculator());
+    this._bot.hears(/^!/, Memo());
 
     return this._bot;
   }
