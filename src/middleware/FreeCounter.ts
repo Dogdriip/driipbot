@@ -1,4 +1,4 @@
-export default () => (ctx) => {
+export default () => async (ctx) => {
   const date = [
     {
       name: "이재명",
@@ -27,7 +27,7 @@ export default () => (ctx) => {
     },
     {
       name: "최원태",
-      start: new Date(),
+      start: new Date("2019-01-01"),
       end: new Date("2020-01-01"),
     },
     {
@@ -43,7 +43,9 @@ export default () => (ctx) => {
     const total = it.end.getTime() - it.start.getTime();
     const progress = now.getTime() - it.start.getTime();
     const percentage = Math.max(0, (progress / total) * 100);
-    res += `*${it.name}* \`${percentage}%\` \n`;
+    res += `*${it.name}* \`${
+      percentage >= 100 ? "전역축하!" : percentage + "%"
+    }\` \n`;
     res += `\`[`;
     for (let n = 0; n < 20; n++) {
       if (percentage < (n + 1) * 5) {
@@ -55,5 +57,5 @@ export default () => (ctx) => {
     res += `]\`\n\n`;
   });
 
-  ctx.replyWithMarkdownV2(res);
+  await ctx.replyWithMarkdownV2(res);
 };

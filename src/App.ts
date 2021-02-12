@@ -29,7 +29,7 @@ export default class App {
     this._bot.command("say", Say({ delete: false })); // 말하기
     this._bot.command("sayd", Say({ delete: true })); // 말하고 지우기
     this._bot.command("free", FreeCounter()); // 전역 카운터
-    this._bot.command("deletememo", Memo.deleteMemo()); // 전역 카운터
+    this._bot.command("deletememo", Memo.deleteMemo()); // 메모 삭제
 
     this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
     this._bot.hears(/=$/, Calculator()); // 계산기

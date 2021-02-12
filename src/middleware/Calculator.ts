@@ -1,7 +1,7 @@
-export default () => (ctx) => {
+export default () => async (ctx) => {
   const re = /^[0-9+\-*/^()]+$/g;
   const text = ctx.message.text.split("=")[0];
   if (re.test(text)) {
-    ctx.reply(eval(text));
+    await ctx.reply(eval(text));
   }
 };
