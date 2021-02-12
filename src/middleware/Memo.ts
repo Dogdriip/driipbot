@@ -1,5 +1,4 @@
 import { getModelForClass, modelOptions, prop } from "@typegoose/typegoose";
-import { Markup } from "telegraf";
 
 @modelOptions({ options: { customName: "Memo" } })
 class MemoModel {
@@ -13,7 +12,7 @@ class MemoModel {
   name: string;
 }
 
-export default () => async (ctx, next) => {
+const addMemo = () => async (ctx, next) => {
   const memoModel = getModelForClass(MemoModel);
 
   const name = ctx.message.text.slice(1);
@@ -62,13 +61,44 @@ export default () => async (ctx, next) => {
     await memo.save();
 
     try {
-      await ctx.reply(
-        msg,
-        Markup.inlineKeyboard([Markup.button.callback("Delete", "memodel")]) // TODO Implement memodel
-      );
+      await ctx.reply(msg);
     } catch (e) {
       console.log(e.description);
       return next();
     }
   }
 };
+
+const deleteMemo = () => async (ctx, next) => {
+  const memoModel = getModelForClass(MemoModel);
+
+  const text = ctx.message.text;
+  const match = text.match(/^\/([^\s]+)\s?(.+)?/);
+  const name = match[2];
+  if (!name) {
+    return next();
+  }
+
+  let memo = await memoModel.findOne({
+    chat_id: ctx.message.chat.id,
+    name,
+  });
+
+  if (!memo) {
+    await ctx.reply(`Cannot found "${name}".`);
+    return next();
+  }
+
+  try {
+    await memoModel.deleteOne({
+      chat_id: ctx.chat.id,
+      name,
+    });
+    await ctx.reply(`Deleted "${name}".`);
+  } catch (e) {
+    console.log(e);
+    return next();
+  }
+};
+
+export default { addMemo, deleteMemo };

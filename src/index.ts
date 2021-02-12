@@ -11,16 +11,20 @@ const token = process.env.BOT_TOKEN;
   const app = new App(token, container);
   const bot = app.build();
 
-  await mongoose.connect(
-    `mongodb://${process.env.MONGO_HOST || "localhost"}:${
-      process.env.MONGO_PORT || 27017
-    }`,
-    {
+  const mongo_url = `mongodb://${process.env.MONGO_HOST || "localhost"}:${
+    process.env.MONGO_PORT || 27017
+  }`;
+
+  try {
+    await mongoose.connect(mongo_url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       dbName: "driipbot",
-    }
-  );
-
-  bot.launch();
+    });
+    console.log(`Connected to MongoDB: ${mongo_url}`);
+    bot.launch();
+  } catch (e) {
+    console.log(`Cannot connect to MongoDB: ${mongo_url}`);
+    console.log(e.description);
+  }
 })();
