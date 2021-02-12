@@ -14,7 +14,7 @@ const token = process.env.BOT_TOKEN;
   await mongoose.connect(
     `mongodb://${process.env.MONGO_HOST || "localhost"}:${
       process.env.MONGO_PORT || 27017
-    }/`,
+    }`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
