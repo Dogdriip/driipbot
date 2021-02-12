@@ -1,0 +1,9 @@
+version: "3.0"
+
+services:
+  bot:
+    build: .
+    restart: always
+    environment:
+      MONGO_CONN_STR: YOUR_MONGO_CONNECTION_STRING_HERE
+      BOT_TOKEN: YOUR_BOT_TOKEN_HERE
