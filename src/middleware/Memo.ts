@@ -101,4 +101,23 @@ const deleteMemo = () => async (ctx, next) => {
   }
 };
 
-export default { addMemo, deleteMemo };
+const listMemo = () => async (ctx, next) => {
+  const memoModel = getModelForClass(MemoModel);
+
+  try {
+    const memo = await memoModel.find({
+      chat_id: ctx.chat.id,
+    });
+
+    let res = "";
+    memo.forEach((e) => {
+      res += `\`${e.name}\` `;
+    });
+    await ctx.replyWithMarkdownV2(res);
+  } catch (e) {
+    console.log(e);
+    return next();
+  }
+};
+
+export default { addMemo, deleteMemo, listMemo };
