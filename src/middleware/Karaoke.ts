@@ -16,8 +16,12 @@ interface Song {
 
 export default (option: Option) => async (ctx, next) => {
   const from = ctx.state.command.args[0]; // song, singer
-  const query = ctx.state.command.args[1];
+  if (from !== "song" && from !== "singer") {
+    ctx.replyWithHTML("usage: <code>/tj (song | singer) query</code>");
+    return next();
+  }
 
+  const query = ctx.state.command.args[1];
   try {
     const { data } = await axios.get<Song[]>(
       `https://api.manana.kr/karaoke/${encodeURI(from)}/${encodeURI(query)}/${

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bot-1
+  name: bot-1
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bot-1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2021-02-13T08:46:35Z"
+      labels:
+        app: bot-1
+    spec:
+      containers:
+        - env:
+            - name: MONGO_CONN_STR
+              valueFrom:
+                configMapKeyRef:
+                  key: MONGO_CONN_STR
+                  name: bot-1-config-44tm
+            - name: BOT_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  key: BOT_TOKEN
+                  name: bot-1-config-44tm
+          image: gcr.io/driipbot/github.com/dogdriip/driipbot
+          imagePullPolicy: IfNotPresent
+          name: driipbot-sha256-1
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app: bot-1
+  name: bot-1-hpa-ww2g
+  namespace: default
+spec:
+  maxReplicas: 5
+  metrics:
+    - resource:
+        name: cpu
+        targetAverageUtilization: 80
+      type: Resource
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: bot-1
