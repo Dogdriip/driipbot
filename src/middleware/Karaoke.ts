@@ -15,20 +15,24 @@ interface Song {
 }
 
 export default (option: Option) => async (ctx, next) => {
-  const title = ctx.state.command.args[0];
+  const from = ctx.state.command.args[0]; // song, singer
+  const query = ctx.state.command.args[1];
 
   try {
     const { data } = await axios.get<Song[]>(
-      `https://api.manana.kr/karaoke/song/${encodeURI(title)}/${
+      `https://api.manana.kr/karaoke/${encodeURI(from)}/${encodeURI(query)}/${
         option.brand
       }.json`
     );
 
     let res = "";
     data.forEach((e) => {
-      res += `${e.no} ${e.title} ${e.singer}\n`;
+      res += `<code>${e.no}</code> `;
+      res += `<b>${e.title}</b> —`;
+      res += `<i>${e.singer}</i>`;
+      res += "\n";
     });
-    ctx.reply(res);
+    ctx.replyWithHTML(res);
   } catch (e) {
     console.log(e);
   }
