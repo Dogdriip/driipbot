@@ -1,7 +1,6 @@
 import { Container } from "inversify";
 import { Telegraf } from "telegraf";
 import Calculator from "./middleware/Calculator";
-import FreeCounter from "./middleware/FreeCounter";
 import Memo from "./middleware/Memo";
 import Say from "./middleware/Say";
 import Select from "./middleware/Select";
@@ -29,7 +28,6 @@ export default class App {
     this._bot.command("pick", Select()); // 랜덤 선택
     this._bot.command("say", Say({ delete: false })); // 말하기
     this._bot.command("sayd", Say({ delete: true })); // 말하고 지우기
-    this._bot.command("free", FreeCounter()); // 전역 카운터
     this._bot.command("deletememo", Memo.deleteMemo()); // 메모 삭제
     this._bot.command("listmemo", Memo.listMemo()); // 저장된 메모 목록
     this._bot.command("tj", Karaoke({ brand: "tj" }));
