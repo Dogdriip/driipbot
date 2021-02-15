@@ -5,6 +5,7 @@ import FreeCounter from "./middleware/FreeCounter";
 import Memo from "./middleware/Memo";
 import Say from "./middleware/Say";
 import Select from "./middleware/Select";
+import Karaoke from "./middleware/Karaoke";
 import CommandParser, { ContextWithState } from "./util/CommandParser";
 import TimeLogger from "./util/TimeLogger";
 
@@ -31,6 +32,7 @@ export default class App {
     this._bot.command("free", FreeCounter()); // 전역 카운터
     this._bot.command("deletememo", Memo.deleteMemo()); // 메모 삭제
     this._bot.command("listmemo", Memo.listMemo()); // 저장된 메모 목록
+    this._bot.command("tj", Karaoke({ brand: "tj" }));
 
     this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
     this._bot.hears(/=$/, Calculator()); // 계산기
