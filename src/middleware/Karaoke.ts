@@ -16,8 +16,8 @@ interface Song {
 
 export default (option: Option) => async (ctx, next) => {
   const from = ctx.state.command.args[0]; // song, singer
-  if (from !== "song" && from !== "singer") {
-    ctx.replyWithHTML("usage: <code>/tj (song | singer) query</code>");
+  if (from !== "song" && from !== "singer" && from !== "no") {
+    ctx.replyWithHTML("usage: <code>/tj (song | singer | no) query</code>");
     return next();
   }
 
