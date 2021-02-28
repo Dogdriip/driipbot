@@ -33,7 +33,7 @@ export default class App {
     this._bot.command("tj", Karaoke({ brand: "tj" }));
 
     this._bot.hears("브로코 브로코 브로콜리", (ctx) => ctx.reply("브로코!"));
-    this._bot.hears(/=$/, Calculator()); // 계산기
+    // this._bot.hears(/=$/, Calculator()); // 계산기
     this._bot.hears(/^!/, Memo.addMemo()); // 메모 추가
 
     return this._bot;
