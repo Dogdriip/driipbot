@@ -4,7 +4,7 @@ export default () => async (ctx) => {
   if (re.test(text)) {
     try {
       const eval_text = eval(text);
-      await ctx.reply();
+      await ctx.reply(eval_text);
     } catch (e) {
       console.error(e);
     }

@@ -38,7 +38,7 @@ export default (option: Option) => async (ctx, next) => {
     });
     ctx.replyWithHTML(res);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
   return next();

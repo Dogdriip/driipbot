@@ -18,7 +18,7 @@ export default () => (ctx, next) => {
   if (ctx.message && ctx.message.text) {
     const text = ctx.message.text;
     if (text.startsWith("/")) {
-      const match = text.match(/^\/([^@\s]+)@?(?:(\S+)|)\s?([\s\S]+)?$/i);
+      const match = text.trim().match(/^\/([^\s]+)\s?(.+)?/);
       let args = [];
       let command;
       if (match !== null) {
